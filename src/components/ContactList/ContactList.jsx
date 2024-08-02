@@ -8,13 +8,19 @@ export default function ContactList() {
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectNameFilter);
 
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter)
+  const filteredContacts = contacts.filter(
+    (contact) =>
+      contact.name.toLowerCase().includes(filter) ||
+      contact.number.includes(filter)
+  );
+
+  const sortedContacts = filteredContacts.sort((a, b) =>
+    a.name.localeCompare(b.name)
   );
 
   return (
     <ul className={css.contactList}>
-      {filteredContacts.map((contact) => (
+      {sortedContacts.map((contact) => (
         <li key={contact.id}>
           <Contact
             id={contact.id}
